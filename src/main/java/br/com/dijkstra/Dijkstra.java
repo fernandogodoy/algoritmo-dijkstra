@@ -7,6 +7,8 @@ import java.util.List;
 import br.com.dijkstra.model.Aresta;
 import br.com.dijkstra.model.Grafo;
 import br.com.dijkstra.model.Vertice;
+import br.com.dijkstra.printer.ConsolePrinter;
+import br.com.dijkstra.printer.Printer;
 import br.com.dijkstra.util.FileUtil;
 
 /**
@@ -19,35 +21,56 @@ public class Dijkstra {
 	private List<Vertice> rotulados = new ArrayList<>();
 	private List<Vertice> naoRotulados = new ArrayList<>();
 
+	private Printer printer;
+
 	public static void main(String[] args) {
 		Dijkstra dijkstra = new Dijkstra();
 		dijkstra.execute("1", "9");
-		System.out.println(dijkstra.rotulados);
-		
+		dijkstra.printConsole();
+	}
+
+	private void printConsole() {
+		printer = new ConsolePrinter(rotulados);
+		printer.print();
 	}
 
 	private void execute(String idOrigem, String idDestino) {
 		Grafo grafo = FileUtil.readFile();
+		Vertice destino = new Vertice(idDestino);
+		
 		grafo.inicializar();
 		adicionarNaoRotulados(grafo);
-		Vertice origem = grafo.getVertices().get(grafo.getVertices().indexOf(new Vertice(idOrigem)));
+		Vertice origem = grafo.buscar(idOrigem);
 		grafo.atualizarPeso(origem, BigDecimal.ZERO);
-		rotular(origem, grafo);
-		
-		while(!naoRotulados.isEmpty()){
+		rotular(origem);
+
+		while (!naoRotulados.isEmpty()) {
 			List<Aresta> adjacentes = grafo.getAdjacentes(rotulados);
 			grafo.atualizarPesoVertices(origem, adjacentes);
 			Aresta arestaMenorCusto = selecionarMenorCusto(adjacentes);
-			rotular(arestaMenorCusto.getDestino(), grafo);
+			rotular(arestaMenorCusto.getDestino());
 			origem = arestaMenorCusto.getDestino();
+			
+			if(origem.equals(destino)) break;
 		}
 	}
 
-	private void rotular(Vertice vertice, Grafo grafo) {
+	/**
+	 * Rotula o vertice selecionado
+	 * 
+	 * @param vertice
+	 */
+	private void rotular(Vertice vertice) {
 		rotulados.add(vertice);
 		naoRotulados.remove(vertice);
 	}
 
+	/**
+	 * Seleciona o vertice não rotulado de menor custo
+	 * 
+	 * @param adjacentes
+	 * @return
+	 */
 	private Aresta selecionarMenorCusto(List<Aresta> adjacentes) {
 		Aresta selecionada = null;
 		BigDecimal peso = BigDecimal.valueOf(Long.MAX_VALUE);

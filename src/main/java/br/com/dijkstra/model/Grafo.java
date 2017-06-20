@@ -90,13 +90,6 @@ public class Grafo {
 		
 	}
 
-	public void fecharVertice(Vertice vertice) {
-		arestas.stream()
-			.filter(aresta -> aresta.getOrigem().equals(vertice))
-			.findFirst()
-			.ifPresent(a -> a.getOrigem().fechar());
-	}
-
 	public List<Vertice> getAdjacentes(Vertice vertice) {
 		return arestas.stream()
 				.filter(aresta -> aresta.getOrigem().equals(vertice))
@@ -110,6 +103,10 @@ public class Grafo {
 			.forEach(aresta -> {
 				aresta.getOrigem().atualizarPeso(peso);
 			});
+	}
+
+	public Vertice buscar(String idOrigem) {
+		return getVertices().get(getVertices().indexOf(new Vertice(idOrigem)));
 	}
 
 

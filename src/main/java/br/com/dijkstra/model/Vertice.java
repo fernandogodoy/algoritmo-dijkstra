@@ -14,11 +14,8 @@ public class Vertice {
 
 	private BigDecimal peso;
 
-	private Boolean isAberto;
-
 	public Vertice(String id) {
 		this.id = id;
-		this.isAberto = Boolean.TRUE;
 	}
 
 	public String getId() {
@@ -27,14 +24,6 @@ public class Vertice {
 
 	public BigDecimal getPeso() {
 		return peso;
-	}
-
-	public Boolean isAberto() {
-		return isAberto;
-	}
-
-	public void fechar() {
-		this.isAberto = Boolean.FALSE;
 	}
 
 	@Override
@@ -53,7 +42,7 @@ public class Vertice {
 
 	@Override
 	public String toString() {
-		return id + "-" + peso;
+		return id;
 	}
 
 	/**

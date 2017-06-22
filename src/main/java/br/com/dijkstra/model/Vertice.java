@@ -13,7 +13,9 @@ public class Vertice {
 	private String id;
 
 	private BigDecimal peso;
-
+	
+	private Vertice anterior;
+	
 	public Vertice(String id) {
 		this.id = id;
 	}
@@ -25,7 +27,11 @@ public class Vertice {
 	public BigDecimal getPeso() {
 		return peso;
 	}
-
+	
+	public Vertice getAnterior() {
+		return anterior;
+	}
+	
 	@Override
 	public boolean equals(final Object other) {
 		if (!(other instanceof Vertice)) {
@@ -61,5 +67,9 @@ public class Vertice {
 	public void atualizarPeso(BigDecimal peso) {
 		this.peso = peso;
 	}
-
+	
+	public void atualizarReferencia(Vertice vertice, BigDecimal peso){
+		atualizarPeso(peso);
+		this.anterior = vertice;
+	}
 }

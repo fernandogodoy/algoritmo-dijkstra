@@ -8,6 +8,7 @@ import br.com.dijkstra.model.Aresta;
 import br.com.dijkstra.model.Grafo;
 import br.com.dijkstra.model.Vertice;
 import br.com.dijkstra.printer.ConsolePrinter;
+import br.com.dijkstra.printer.JFramePrinter;
 import br.com.dijkstra.printer.Printer;
 import br.com.dijkstra.util.FileUtil;
 
@@ -20,19 +21,29 @@ public class Dijkstra {
 
 	private List<Vertice> rotulados = new ArrayList<>();
 	private List<Vertice> naoRotulados = new ArrayList<>();
+	
+	private String idVerticeOrigem = "1";
+	private String idVerticeDestino = "9";
 
 	private Printer printer;
 
 	public static void main(String[] args) {
 		Dijkstra dijkstra = new Dijkstra();
-		dijkstra.execute("1", "9");
+		dijkstra.execute(dijkstra.idVerticeOrigem, dijkstra.idVerticeDestino);
 		dijkstra.printConsole();
+		dijkstra.printJFrame();
 	}
 
 	private void printConsole() {
 		printer = new ConsolePrinter(rotulados);
 		printer.print();
 	}
+	
+	private void printJFrame() {
+		printer = new JFramePrinter(rotulados, new Vertice(idVerticeDestino));
+		printer.print();
+	}
+
 
 	private void execute(String idOrigem, String idDestino) {
 		Grafo grafo = FileUtil.readFile();
@@ -57,6 +68,7 @@ public class Dijkstra {
 
 	/**
 	 * Rotula o vertice selecionado
+	 * @param grafo 
 	 * 
 	 * @param vertice
 	 */

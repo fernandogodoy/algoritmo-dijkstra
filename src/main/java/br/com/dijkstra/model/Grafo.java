@@ -30,6 +30,7 @@ public class Grafo {
 	public String toString() {
 		return "Arvore [" + arestas + "], size: " + arestas.size();
 	}
+	
 
 	/**
 	 * Seleciona um vertice de forma aleatória
@@ -51,7 +52,7 @@ public class Grafo {
 	public List<Aresta> getAdjacentes(List<Vertice> rotulados) {
 		List<Aresta> retorno = new ArrayList<>();
 		for (Vertice vertice: rotulados) {
-			List<Aresta> list = arestas.stream()
+			List<Aresta> list = arestas.parallelStream()
 										.filter(aresta -> aresta.getOrigem().equals(vertice))
 										.collect(Collectors.toList());
 			retorno.addAll(list);
@@ -62,7 +63,7 @@ public class Grafo {
 	public List<Vertice> getVertices() {
 		return new ArrayList<>(vertices);
 	}
-
+	
 	public Integer getQtdArestas() {
 		return arestas.size();
 	}
@@ -83,7 +84,7 @@ public class Grafo {
 			BigDecimal pesoAtual = origem.getPeso().add(aresta.getPeso());
 			Vertice destino = aresta.getDestino();
 			if(destino.getPeso().compareTo(pesoAtual) == 1){
-				aresta.getDestino().atualizarPeso(pesoAtual);
+				aresta.getDestino().atualizarReferencia(origem, pesoAtual);
 				atualizarPeso(aresta.getOrigem(), origem.getPeso());
 			}
 		});
@@ -91,7 +92,7 @@ public class Grafo {
 	}
 
 	public List<Vertice> getAdjacentes(Vertice vertice) {
-		return arestas.stream()
+		return arestas.parallelStream()
 				.filter(aresta -> aresta.getOrigem().equals(vertice))
 				.map(ares -> ares.getDestino())
 				.collect(Collectors.toList());
@@ -108,6 +109,5 @@ public class Grafo {
 	public Vertice buscar(String idOrigem) {
 		return getVertices().get(getVertices().indexOf(new Vertice(idOrigem)));
 	}
-
 
 }

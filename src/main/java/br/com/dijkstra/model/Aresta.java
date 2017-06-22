@@ -21,6 +21,11 @@ public class Aresta implements Comparable<Aresta> {
 		this.destino = new Vertice(destino);
 		this.peso = new BigDecimal(peso);
 	}
+	
+	public Aresta(Vertice origem, Vertice destino) {
+		this.origem = origem;
+		this.destino = destino;
+	}
 
 	public Vertice getOrigem() {
 		return origem;

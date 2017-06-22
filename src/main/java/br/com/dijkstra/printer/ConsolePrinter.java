@@ -20,7 +20,7 @@ public class ConsolePrinter implements Printer {
 	@Override
 	public void print() {
 		System.out.println("R = " + vertices);
-		System.out.println("Z = " + vertices.stream().reduce((first, second) -> second).get().getPeso());
+		System.out.println("Z = " + vertices.parallelStream().reduce((first, second) -> second).get().getPeso());
 	}
 
 	

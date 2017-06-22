@@ -72,7 +72,7 @@ public class JFramePrinter extends JApplet implements Printer {
 
 	private void jframeConfig() {
 		frame.getContentPane().add(this);
-		frame.setTitle("Árvore Geradora Mínima - Algoritmo de Prim");
+		frame.setTitle("Caminho Mínimo - Algoritmo de Dijkstra");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
